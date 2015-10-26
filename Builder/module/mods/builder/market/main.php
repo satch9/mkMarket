@@ -90,7 +90,7 @@ class module_mods_builder_market extends abstract_moduleBuilder{
 			'views',
 			'databasesEmbedded',
 			'unitTest',
-			'market',
+			'builder',
 		);
 		$tModule=array();
 		foreach($tTitle as $sTitle){
@@ -126,13 +126,23 @@ class module_mods_builder_market extends abstract_moduleBuilder{
 			return null;
 		}
 
+		$sUrl=_root::getConfigVar('market.builder.versions.url');
+		try{
+			$sRemoteVersions=file_get_contents($sUrl);
+		}catch(Exception $e){
+			$oView=$this->getView('error');
+			$oView->message=trR('problemeUrlmarket',array('#message#'=>$e->getMessage()));
+			return $oView;
+		}
+		$tRemoteIni=parse_ini_string($sRemoteVersions);
+
 		$sRootUrl=_root::getConfigVar('market.builder.url');
 
 		$tModuleToUpdate=_root::getParam('toUpdate');
 		if($tModuleToUpdate){
 			foreach($tModuleToUpdate as $sModule){
 				$sPathModule=str_replace('_','/',$sModule);
-				if(!$this->unzipTo($sRootUrl.'/module/'.$sPathModule.'.zip',_root::getConfigVar('path.module').'/'.$sPathModule)){
+				if(!$this->unzipTo($sRootUrl.'/module/'.$sModule.$tRemoteIni[$sModule].'.zip',_root::getConfigVar('path.module').'/'.$sPathModule)){
 					return $this->errorZip;
 				}
 
@@ -140,7 +150,6 @@ class module_mods_builder_market extends abstract_moduleBuilder{
 		}
 	}
 	private function unzipTo($sUrl,$sTarget){
-		
 		try{
 			file_put_contents($sTarget.'.zip',file_get_contents($sUrl));
 		}
@@ -152,11 +161,14 @@ class module_mods_builder_market extends abstract_moduleBuilder{
 		$zip = new ZipArchive;
 		if ($zip->open($sTarget.'.zip')){
 		    
-		    $zip->extractTo(dirname($sTarget));
+		    $zip->extractTo($sTarget);
 		    $zip->close();
 
-		    chmod($sTarget,0777);
+		    try{
+		    	chmod($sTarget,0777);
+		    }catch(Exception $e){
 
+		    }
 		    //menage
 		    unlink($sTarget.'.zip');
 		}

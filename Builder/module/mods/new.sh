@@ -1,5 +1,4 @@
 #!/bin/bash
-#./new.sh normal/monmodule
 mkdir $1/$2
 mkdir $1/$2/view
 mkdir $1/$2/src
