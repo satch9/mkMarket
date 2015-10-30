@@ -147,7 +147,7 @@ class Page{
 
 	private function add($tag,$value,$tOption=null){
 		$this->open($tag,$tOption);
-		$this->sXml.=$value;
+		$this->sXml.='<![CDATA['.$value.']]>';
 		$this->close($tag);
 	}
 	private function open($tag,$tOption=null){
