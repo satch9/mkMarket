@@ -7,9 +7,9 @@ $tLang=array('fr','en');
 
 $tNavBrut=array(
 	'index' => array('Accueil','Home'),
-	'bootstrap_list_1' => array('Boostrap','Bootstrap'),
-	'normal_list_1' => array('Normal','Normal'),
-	'builder_list_1'=>array('Builder','Builder'),
+	'normal_list_1' => array('Compatibles Applications "Normales"','Normal compatibles extensions'),
+	'bootstrap_list_1' => array('Compatibles Applications "Bootstrap"','Bootstrap compatible extensions'),
+	'builder_list_1'=>array('Pour le Builder','Builder extensions'),
 );
 
 $tNav=array();
@@ -21,8 +21,8 @@ foreach($tNavBrut as $key => $tLabel){
 
 //page accueil
 $tContent=array(
-	'fr'=>'Bienvenue sur le market mkframework',
-	'en'=>'welcom in the mkframework market',
+	'fr'=>'Bienvenue sur le market mkframework, ici vous pourrez ajouter de nouvelles extensions.',
+	'en'=>'welcome to the mkframework market. There you should install new builder extensions.',
 );
 
 Page::$sRootPages=$sRootPages;
@@ -111,6 +111,8 @@ class Page{
 
 	public static $sRootPages=null;
 
+	protected $ret="\n";
+
 	public function save($sLang){
 
 		$this->sXml='<?xml version="1.0" ?>';
@@ -154,7 +156,7 @@ class Page{
 		$this->sXml.='<'.$tag.$this->getOption($tOption).'>';
 	}
 	private function close($tag){
-		$this->sXml.='</'.$tag.'>';
+		$this->sXml.='</'.$tag.'>'.$this->ret;
 	}
 	private function getOption($tOption=null){
 		if($tOption){
