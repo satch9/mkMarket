@@ -106,6 +106,7 @@ class Page{
 	public $title=null;
 	public $content=null;
 	public $id=null;
+	public $version=null;
 
 	public $tNav=array();
 
@@ -126,6 +127,7 @@ class Page{
 			$this->add('content',$this->content);
 
 			$this->add('id',$this->id);
+			$this->add('version',$this->version);
 
 			$this->open('nav');
 			foreach($this->tNav as $href => $label){
