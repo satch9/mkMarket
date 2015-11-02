@@ -64,9 +64,12 @@ foreach($tType as $sType){
 				
 				//fr
 				$oPage=new Page;
-				$oPage->name=$sType.'_detail_'.$oData->id;
+				$oPage->name='detail_'.$oData->id;
 				$oPage->type='detail';
 				$oPage->title=$tIni['title.'.$lang];
+				$oPage->id=(string)$oData->id;
+				$oPage->version=$tIni['version'];
+
 				$oPage->content=null;
 				$oPage->tNav=$tNav[$lang];
 				$oPage->save($lang);
@@ -102,6 +105,7 @@ class Page{
 	public $type=null;
 	public $title=null;
 	public $content=null;
+	public $id=null;
 
 	public $tNav=array();
 
@@ -117,30 +121,32 @@ class Page{
 
 		$this->sXml='<?xml version="1.0" ?>';
 		$this->open('page');
-		$this->add('type',$this->type);
-		$this->add('title',$this->title);
-		$this->add('content',$this->content);
+			$this->add('type',$this->type);
+			$this->add('title',$this->title);
+			$this->add('content',$this->content);
 
-		$this->open('nav');
-		foreach($this->tNav as $href => $label){
-			$this->add('link',$label,array('href'=>$href));
+			$this->add('id',$this->id);
 
-		}
-		$this->close('nav');
+			$this->open('nav');
+			foreach($this->tNav as $href => $label){
+				$this->add('link',$label,array('href'=>$href));
 
-		if($this->tData){
-			$this->open('data');
-			foreach($this->tData as $oData){
-				$this->open('bloc');
-					$this->add('title',$oData->title);
-					$this->add('author',$oData->author);
-					$this->add('id',$oData->id);
-					$this->add('version',$oData->version);
-
-				$this->close('bloc');				
 			}
-			$this->close('data');
-		}
+			$this->close('nav');
+
+			if($this->tData){
+				$this->open('data');
+				foreach($this->tData as $oData){
+					$this->open('bloc');
+						$this->add('title',$oData->title);
+						$this->add('author',$oData->author);
+						$this->add('id',$oData->id);
+						$this->add('version',$oData->version);
+
+					$this->close('bloc');				
+				}
+				$this->close('data');
+			}
 		$this->close('page');
 
 		file_put_contents(self::$sRootPages.'/'.$sLang.'/'.$this->name.'.xml', $this->sXml );
