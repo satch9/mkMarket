@@ -69,6 +69,7 @@ foreach($tType as $sType){
 				$oPage=new Page;
 				$oPage->name='detail_'.$oData->id;
 				$oPage->type='detail';
+				$oPage->author=$tIni['author'];
 				$oPage->title=$tIni['title.'.$lang];
 				$oPage->id=(string)$oData->id;
 				$oPage->version=$tIni['version'];
@@ -110,6 +111,7 @@ class Page{
 	public $content=null;
 	public $id=null;
 	public $version=null;
+	public $author=null;
 
 	public $tNav=array();
 
@@ -131,6 +133,7 @@ class Page{
 
 			$this->add('id',$this->id);
 			$this->add('version',$this->version);
+			$this->add('author',$this->author);
 
 			$this->open('nav');
 			foreach($this->tNav as $href => $label){
