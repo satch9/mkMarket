@@ -21,6 +21,7 @@ foreach($tType as $sType){
 
 			$tIni=parse_ini_file($sPathModule.'/'.$sModule.'/info.ini');
 			
+			$tDetail['mods_'.$sType.'_'.$sModule]=$tIni['version'];
 			
 			//zip
 			//from, to, filename.zip
@@ -29,6 +30,16 @@ foreach($tType as $sType){
 	}
 
 }
+
+//version
+$tIniFile=array();
+$tIniFile[]="updateDate:'".date('Y-m-d H:i:s')."'";
+foreach($tDetail as $id => $version){
+	$tIniFile[]="$id='$version'";
+}
+file_put_contents($sVersionFilename,implode("\n",$tIniFile));
+
+
 
 function archiveZip($sFrom,$sTo,$sFilename,$zip=null,$racine=null){
 	$bNew=0;
