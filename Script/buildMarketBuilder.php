@@ -1,7 +1,10 @@
 <?php
 
 $sRootPathModule='Builder/module';
-$sRootPages='Builder/pages';
+
+//generation
+$sRootPages='Public/Builder/pages';
+
 
 $tLang=array('fr','en');
 

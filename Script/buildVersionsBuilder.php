@@ -1,7 +1,9 @@
 <?php
 //config
 $sRootPathModule='Builder/module';
-$sVersionFilename='Builder/versions.ini';
+
+//generation
+$sVersionFilename='Public/Builder/versions.ini';
 
 $tType=array('all','normal','bootstrap','builder');
 $tLinkModule=array();

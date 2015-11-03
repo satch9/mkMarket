@@ -1,9 +1,10 @@
 <?php
 //config
 $sRootPathModule='Builder/module';
-$sVersionFilename='Builder/versions.ini';
 
-$sRootPackages='Packages/Builder/module';
+//generation
+$sVersionFilename='Public/Builder/versions.ini';
+$sRootPackages='Public/Builder/module';
 
 
 $tType=array('all','normal','bootstrap','builder');
