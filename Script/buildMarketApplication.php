@@ -58,7 +58,7 @@ foreach($tType as $sType){
 			foreach($tLang as $lang){
 				$oData=new stdclass;
 				$oData->title=$tIni['title.'.$lang];
-				$oData->id=$sType.'_'.$sModule;
+				$oData->id=$tIni['id'];;
 				$oData->author=$tIni['author'];
 				$oData->version=$tIni['version'];
 				$tData[$lang][]=$oData;
