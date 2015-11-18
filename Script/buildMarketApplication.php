@@ -10,9 +10,10 @@ $tLang=array('fr','en');
 
 $tNavBrut=array(
 	'index' => array('Accueil','Home'),
-	'normal_list_1' => array('Compatibles Applications "Normales"','Normal compatibles extensions'),
-	'bootstrap_list_1' => array('Compatibles Applications "Bootstrap"','Bootstrap compatible extensions'),
-);
+	'normal_list_1' => array('Modules pour Applications "Normales"','Normal compatibles extensions'),
+	'bootstrap_list_1' => array('Modules pour Applications "Bootstrap"','Bootstrap compatible extensions'),
+	'plugins_list_1'=> array('Plugins','Plugins'),
+);	
 
 $tNav=array();
 
@@ -67,7 +68,7 @@ foreach($tType as $sType){
 				//fr
 				$oPage=new Page;
 				$oPage->name='detail_'.$oData->id;
-				$oPage->type='detail';
+				$oPage->type='detail_module';
 				$oPage->author=$tIni['author'];
 				$oPage->title=$tIni['title.'.$lang];
 				$oPage->id=(string)$oData->id;
