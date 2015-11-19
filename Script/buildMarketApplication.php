@@ -1,6 +1,7 @@
 <?php
 
 $sRootPathModule='Application/module';
+$sRootPathPlugin='Application/plugin';
 
 //generation
 $sRootPages='Public/Application/pages';
@@ -12,7 +13,7 @@ $tNavBrut=array(
 	'index' => array('Accueil','Home'),
 	'normal_list_1' => array('Modules pour Applications "Normales"','Normal compatibles extensions'),
 	'bootstrap_list_1' => array('Modules pour Applications "Bootstrap"','Bootstrap compatible extensions'),
-	'plugins_list_1'=> array('Plugins','Plugins'),
+	'plugin_list_1'=> array('Plugins','Plugins'),
 );	
 
 $tNav=array();
@@ -39,10 +40,9 @@ foreach($tLang as $lang){
 	$oPageAccueil->save($lang);
 }
 
+//---modules
+
 $tType=array('all','normal','bootstrap');
-
-$tDetail=array();
-
 foreach($tType as $sType){
 	$sPathModule=$sRootPathModule.'/'.$sType;
 	
@@ -74,19 +74,19 @@ foreach($tType as $sType){
 				$oPage->id=(string)$oData->id;
 				$oPage->version=$tIni['version'];
 
-                                $sDescFile=$sPathModule.'/'.$sModule.'/market/desc_'.$lang.'.xml';
-                                if(file_exists($sDescFile)){
-                                    $oXml=  simplexml_load_file($sDescFile);
-                                    
-                                    $oPage->presentation=formate( (string)$oXml->presentation);
-                                    $oPage->actualites=formate( (string)$oXml->actualites);
-                                    $oPage->utilisation=formate( (string)$oXml->utilisation);
-                                }
-                                
+				$sDescFile=$sPathModule.'/'.$sModule.'/market/desc_'.$lang.'.xml';
+				if(file_exists($sDescFile)){
+					$oXml=  simplexml_load_file($sDescFile);
+					
+					$oPage->presentation=formate( (string)$oXml->presentation);
+					$oPage->actualites=formate( (string)$oXml->actualites);
+					$oPage->utilisation=formate( (string)$oXml->utilisation);
+				}
+								
 				$oPage->content=null;
 				
-                                
-                                $oPage->tNav=$tNav[$lang];
+								
+				$oPage->tNav=$tNav[$lang];
 				$oPage->save($lang);
 			}
 
@@ -97,72 +97,143 @@ foreach($tType as $sType){
 
 	}
 	foreach($tLang as $lang){
-            if(isset($tData[$lang])){
-		$oPage=new Page;
-		$oPage->name=$sType.'_list_1';
-		$oPage->type='list';
-		$oPage->title='Liste '.$sType;
-		$oPage->content='';
-		$oPage->tNav=$tNav[$lang];
-		$oPage->tData=$tData[$lang];
-		$oPage->save($lang);
-            }
+		if(isset($tData[$lang])){
+			$oPage=new Page;
+			$oPage->name=$sType.'_list_1';
+			$oPage->type='list';
+			$oPage->title='Liste '.$sType;
+			$oPage->content='';
+			$oPage->tNav=$tNav[$lang];
+			$oPage->tData=$tData[$lang];
+			$oPage->save($lang);
+		}
 	}
 
 
 }
+//---fin modules
+
+
+//---plugins
+$sPathPlugin=$sRootPathPlugin;
+
+$tData=array();
+
+$tPluginAll=scandir($sPathPlugin);
+foreach($tPluginAll as $sPlugin){
+
+	$sIniFile=$sPathPlugin.'/'.$sPlugin.'.ini';
+	if(file_exists($sIniFile) ){//and file_exists($sPathModule.'/'.$sModule.'/market.xml')){
+
+		$tIni=parse_ini_file($sIniFile);
+
+		foreach($tLang as $lang){
+			$oData=new stdclass;
+			$oData->title=$tIni['title.'.$lang];
+			$oData->id=$sPlugin;;
+			$oData->author=$tIni['author'];
+			$oData->version=$tIni['version'];
+			$tData[$lang][]=$oData;
+
+			
+			//fr
+			$oPage=new Page;
+			$oPage->name='detail_'.$oData->id;
+			$oPage->type='detail_plugin';
+			$oPage->author=$tIni['author'];
+			$oPage->title=$tIni['title.'.$lang];
+			$oPage->id=(string)$oData->id;
+			$oPage->version=$tIni['version'];
+
+			$sDescFile=$sPathPlugin.'/'.$sPlugin.'.desc_'.$lang.'.xml';
+			if(file_exists($sDescFile)){
+				$oXml=  simplexml_load_file($sDescFile);
+				
+				$oPage->presentation=formate( (string)$oXml->presentation);
+				$oPage->actualites=formate( (string)$oXml->actualites);
+				$oPage->utilisation=formate( (string)$oXml->utilisation);
+			}
+							
+			$oPage->content=null;
+			
+							
+			$oPage->tNav=$tNav[$lang];
+			$oPage->save($lang);
+		}
+
+	}
+
+}
+foreach($tLang as $lang){
+	if(isset($tData[$lang])){
+		$oPage=new Page;
+		$oPage->name='plugin_list_1';
+		$oPage->type='list';
+		$oPage->title='Liste plugin';
+		$oPage->content='';
+		$oPage->tNav=$tNav[$lang];
+		$oPage->tData=$tData[$lang];
+		$oPage->save($lang);
+	}
+}
+
+//---fin plugins
+
+
+
+
 
 function createPage($oPage){
 	file_put_contents($sRootPages.'fr/'.$oPage->name.'.xml', $oPage->build() );
 }
 function formate($sText){
-    $sText2=null;
-    $tLine=explode("\n",$sText);
-    
-    $bStartCode=false;
-    $sCode=null;
-    $bEmptyLine=0;
-    if($tLine){
-        foreach($tLine as $line){
-            $line=trim($line);
-            
-            if(preg_match('/##titre/',$line)){
-                $line='<h2>'.str_replace('##titre ','',$line).'</h2>';
-            }
-            else if(preg_match('/##image/',$line)){
-                $line='<img src="'.str_replace('##image ','',$line).'"/>';
-            }
-            
-            if(preg_match('/##debut_code/',$line)){
-                $bStartCode=true;
-                $line=null;
-            }else if(preg_match('/##fin_code/',$line)){
-                $line='<div class="code">'.highlight_string($sCode,1).'</div>';
-                
-                $bStartCode=false;
-                $sCode=null;
-            }else if($bStartCode){
-                $sCode.=$line."\n";
-                $line=null;
-            }
-            
-            
-            
-            $sText2.=$line;
-            
-            if(!$bEmptyLine){
-                $sText2.='<br/>';
-            }
-            if($line==''){
-                $bEmptyLine=1;
-            }else{
-                $bEmptyLine=0;
-            }
-        }
-    }
-    
-    return $sText2;
-    
+	$sText2=null;
+	$tLine=explode("\n",$sText);
+	
+	$bStartCode=false;
+	$sCode=null;
+	$bEmptyLine=0;
+	if($tLine){
+		foreach($tLine as $line){
+			$line=trim($line);
+			
+			if(preg_match('/##titre/',$line)){
+				$line='<h2>'.str_replace('##titre ','',$line).'</h2>';
+			}
+			else if(preg_match('/##image/',$line)){
+				$line='<img src="'.str_replace('##image ','',$line).'"/>';
+			}
+			
+			if(preg_match('/##debut_code/',$line)){
+				$bStartCode=true;
+				$line=null;
+			}else if(preg_match('/##fin_code/',$line)){
+				$line='<div class="code">'.highlight_string($sCode,1).'</div>';
+				
+				$bStartCode=false;
+				$sCode=null;
+			}else if($bStartCode){
+				$sCode.=$line."\n";
+				$line=null;
+			}
+			
+			
+			
+			$sText2.=$line;
+			
+			if(!$bEmptyLine){
+				$sText2.='<br/>';
+			}
+			if($line==''){
+				$bEmptyLine=1;
+			}else{
+				$bEmptyLine=0;
+			}
+		}
+	}
+	
+	return $sText2;
+	
 }
 class Page{
 
@@ -170,14 +241,14 @@ class Page{
 
 	public $type=null;
 	public $title=null;
-        
+		
 	public $content=null;
-        
-        public $presentation=null;
-        public $actualites=null;
-        public $utilisation=null;
-        
-        
+		
+		public $presentation=null;
+		public $actualites=null;
+		public $utilisation=null;
+		
+		
 	public $id=null;
 	public $version=null;
 	public $author=null;
@@ -198,12 +269,12 @@ class Page{
 		$this->open('page');
 			$this->add('type',$this->type);
 			$this->add('title',$this->title);
-                        
+						
 			$this->add('content',$this->content);
-                                
-                        $this->add('presentation',$this->presentation);
-                        $this->add('actualites',$this->actualites);
-                        $this->add('utilisation',$this->utilisation);
+								
+						$this->add('presentation',$this->presentation);
+						$this->add('actualites',$this->actualites);
+						$this->add('utilisation',$this->utilisation);
 
 			$this->add('id',$this->id);
 			$this->add('version',$this->version);

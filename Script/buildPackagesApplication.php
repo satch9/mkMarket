@@ -1,12 +1,16 @@
 <?php
 //config
 $sRootPathModule='Application/module';
+$sRootPathPlugin='Application/plugin';
+
 
 //generation
 $sVersionFilename='Public/Application/versions.ini';
 $sRootPackages='Public/Application/module';
+$sRootPackagesPlugin='Public/Application/plugin';
 
 
+//modules
 $tType=array('all','normal','bootstrap');
 $tLinkModule=array();
 
@@ -38,6 +42,20 @@ foreach($tDetail as $id => $version){
 	$tIniFile[]="$id='$version'";
 }
 file_put_contents($sVersionFilename,implode("\n",$tIniFile));
+
+
+
+$sPathPlugin=$sRootPathPlugin;
+
+//plugins
+$tPluginAll=scandir($sPathPlugin);
+foreach($tPluginAll as $sPlugin){
+	if(substr($sPlugin,0,1)=='.') continue;
+	file_put_contents($sRootPackagesPlugin.'/'.$sPlugin, file_get_contents($sPathPlugin.'/'.$sPlugin));
+}
+
+
+
 
 
 
