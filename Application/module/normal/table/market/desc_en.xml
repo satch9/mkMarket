@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<market>
+    <presentation><![CDATA[
+    Ce module est un module intégrable permettant d'afficher un tableau html dans votre application
+    ]]></presentation>
+    
+    <actualites><![CDATA[
+          
+        
+    ]]></actualites>
+    
+    <utilisation><![CDATA[
+    L'idée est de capitaliser sur la création de tableaux html.
+Vous pouvez télécharger ce module, l'utiliser mais surtout ne pas hésiter à le personnaliser pour vos applications afin de pouvoir le réutiliser.
+
+Avant de pouvoir l'utiliser, il vous faut copier les images de fleches de tri presents dans le répertoire css/images/ du module.
+Copiez-les dans le repertoire css/images de votre projet.
+        
+    ##titre Tableau simple
+        
+        Dans votre fichier css
+##debut_code
+        .main .content .tb_list th{
+background:#90a4b4;
+}
+.tb_list tr th .tb_list tr td{
+border:1px solid gray;
+padding:3px;
+}
+.tb_list tr.alt td{
+background:#eee;
+}
+.tb_list tr.alt2 td{
+background:#fff;
+}
+        ##fin_code
+        
+        Dans votre fichier de vue
+
+        ##debut_code
+        <?php
+$oTable = new module_table('simple');
+//on defini la classe du tableau
+$oTable->setClass('tb_list');
+//on defini une liste de classe d'alternance (pour alterner les lignes du tableau)
+$oTable->setCycleClass(array('alt','alt2'));
+
+//on defini l'entete du tableau
+$oTable->setHeader(array(
+   'Titre',
+   'Auteur',
+   'Priority',
+   null
+));
+
+//on boucle pour remplir le tableau
+if($this->tArticle){
+   foreach($this->tArticle as $oArticle){
+      
+       $sAuteur=null;
+       if(isset($this->tJoinAuteur[ $oArticle->auteur_id])){
+           $sAuteur= $this->tJoinAuteur[ $oArticle->auteur_id];
+       }
+      
+       //on ajoute une ligne dans le tableau
+       $oTable->addLine(array(
+           $oArticle->titre,
+           $sAuteur,
+           $oArticle->priority,
+           '<a href="'.$this->getLink('article::edit',array('id'=>$oArticle->id) ).'">Edit</a>
+           |
+           <a href="'.$this->getLink('article::show',array('id'=>$oArticle->id) ).'">Show</a>
+           |
+           <a href="'.$this->getLink('article::delete',array('id'=>$oArticle->id) ).'">Delete</a>'
+      
+       ));
+   }
+}
+//on affiche le tableau
+echo $oTable->build()->show();
+?>
+        ##fin_code
+        
+        ##image moduleTableSimple.png
+        
+        ##titre Tableau complexe 1: avec tri
+
+        Dans votre fichier css
+
+           ##debut_code
+        .main .content .tb_list th{
+background:#90a4b4;
+}
+.tb_list tr th .tb_list tr td{
+border:1px solid gray;
+padding:3px;
+}
+.tb_list tr.alt td{
+background:#eee;
+}
+.tb_list tr.alt2 td{
+background:#fff;
+}
+            ##fin_code
+        Dans votre fichier module (par exemple module/article/main.php)
+
+        ##debut_code
+        
+        public function _list(){
+   //on appele une methode du modele qui prend attends les parametres de tri : champ et sens, en indiquant �galement les valeurs par d�faut
+   $tArticle=model_article::getInstance()->findAllOrderBy(module_table::getParam('order','titre'),module_table::getParam('side','ASC'));
+
+   $oView=new _view('article::listViaModule');
+   $oView->tArticle=$tArticle;
+   //on recupere un tableau indexe des auteurs pour afficher leur nom a la place de leur id
+   $oView->tJoinAuteur=model_auteur::getInstance()->getSelect();
+
+   $this->oLayout->add('main',$oView);
+}
+        
+        ##fin_code
+        
+        Dans votre fichier de vue (par exemple module/article/view/listViaModule.php)
+
+        ##debut_code
+        <?php
+$oTable = new module_table('complex1');
+//on defini la classe du tableau
+$oTable->setClass('tb_list');
+//on defini une liste de classe d'alternance (pour alterner les lignes du tableau)
+$oTable->setCycleClass(array('alt','alt2'));
+
+//on defini l'entete du tableau avec tri en indiquant le nom du champ
+$oTable->addHeaderWithOrder('Titre','titre');
+$oTable->addHeaderWithOrder('Auteur','auteur_id');
+$oTable->addHeaderWithOrder('Priority','priority');
+$oTable->addHeader('');
+
+//on boucle pour remplir le tableau
+if($this->tArticle){
+   foreach($this->tArticle as $oArticle){
+      
+       $sAuteur=null;
+       if(isset($this->tJoinAuteur[ $oArticle->auteur_id])){
+           $sAuteur= $this->tJoinAuteur[ $oArticle->auteur_id];
+       }
+      
+       //on ajoute une ligne dans le tableau
+       $oTable->addLine(array(
+           $oArticle->titre,
+           $sAuteur,
+           $oArticle->priority,
+           '<a href="'.$this->getLink('article::edit',array('id'=>$oArticle->id) ).'">Edit</a>
+           |
+           <a href="'.$this->getLink('article::show',array('id'=>$oArticle->id) ).'">Show</a>
+           |
+           <a href="'.$this->getLink('article::delete',array('id'=>$oArticle->id) ).'">Delete</a>'
+       ));
+   }
+}
+echo $oTable->build()->show();
+        ##fin_code
+        
+        ##image moduleTableComplexe1.png
+        
+        
+        
+        
+    ]]></utilisation>
+    
+</market>

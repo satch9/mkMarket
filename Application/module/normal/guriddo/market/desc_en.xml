@@ -1,0 +1,302 @@
+<?xml version="1.0"?>
+<market>
+    <presentation><![CDATA[
+    Ce module est un module intégrable permettant d'afficher un tableau très riche dans votre application.
+    Il s'appuie sur la librairie Guriddo: <a href="http://guriddo.net/">guriddo.net</a>
+        
+    ##image moduleGuriddo.jpg
+        
+        
+    ]]></presentation>
+    
+    <actualites><![CDATA[
+    2015/08/28 : correction d'un bug sur le CRUD Guriddo
+Correction du paramétrage de la clé primaire du tableau pour corriger un problème dans la génération de formulaire.
+        
+    ]]></actualites>
+    
+    <utilisation><![CDATA[
+    L'idée est de vous faciliter le developpemenet de tableau riche
+    Vous pouvez télécharger ce module, l'utiliser mais surtout ne pas hésiter à le personnaliser pour vos applications afin de pouvoir le réutiliser.
+
+    L'implémentation se déroule en plusieurs étapes:
+    - 1. méthode principale construisant le tableau dans la page
+    - 2. appel ajax retournant les données sous un format json
+    - 3. les 4 méthodes à rédiger dans la classe modèle
+
+    ##titre 1. Méthode principale: construction du tableau
+    Dans votre classe module, la méthode action, par exemple _list() d'un module "default"
+
+    ##debut_code
+    public function _list(){
+       //instancier le module
+       $oTable=new module_guriddo;
+       //on indique le nombre de lignes par page
+       $oTable->setPaginationLimit(4);
+
+       //l'id de la div html
+       $oTable->setId('monId');
+
+       //on definit la hauteur du tableau (en pixels)
+       $oTable->setHeight(120);
+       $oTable->setWidth(600);
+
+       //la page permettant de retourner le contenu au format json
+       $oTable->setJsonLink('default::listJson');
+
+       //on defini (si besoin) un menu deroulant permettant de modifier la pagination
+       $oTable->setListLimit(array(10,20));
+
+       //activer l'alternance des lignes
+       $oTable->enableAltRows();
+
+       //activer la reorganisation des colonnes
+       $oTable->enableSortable();
+
+       //definir le sens par defaut de tri (asc/desc)
+       $oTable->setDefaultSort('desc');
+
+       //defintion du tri par defaut
+       $oTable->setDefaultSortField('id');
+
+       //pour ajouter un group de colonne
+       //$oTable->addGroupColumn('Perrsonne',2,'firstname');
+
+       $oTable->addColumn('Nom','firstname',array('width'=>100));
+       $oTable->addColumn('Prenom','lastname');
+       $oTable->addColumn('Code postal','zip');
+       $oTable->addColumn('Ville','city');
+
+       $oView= $oTable->build();
+
+       //assigner la vue retournee a votre layout
+       $this->oLayout->add('main',$oView);
+    }
+    ##fin_code
+    
+    ##titre 2.Méthode ajax retournant les données sous le format json
+    Dans votre méthode listJson du même module
+    
+    ##debut_code
+    public function _listJson(){
+  
+        $oJson=module_guriddo::getJson();
+        //on precise la liste des champs autorise a etre trie
+        $oJson->setSortFieldAllowed(array('id','firstname','lastname','zip','city'));
+
+        if($oJson->hasFilter()){
+
+            $count = model_author::getInstance()->findTotalFiltered($oJson->getListFilter());
+            $oJson->setTotal($count);
+            $tData=model_author::getInstance()->findListFilteredAndLimitOrderBy($oJson->getListFilter(),$oJson->getStart(),$oJson->getLimit(),$oJson->getSortField(),$oJson->getSortSide());
+
+        }else{
+            $count = model_author::getInstance()->findTotal();
+            $oJson->setTotal($count);
+            $tData=model_author::getInstance()->findListLimitOrderBy($oJson->getStart(),$oJson->getLimit(),$oJson->getSortField(),$oJson->getSortSide());
+        }
+
+        $oJson->setData($tData);
+
+        $oJson->setId('id');
+        $oJson->addColumn('id');
+        $oJson->addColumn('firstname');
+        $oJson->addColumn('lastname');
+        $oJson->addColumn('zip');
+        $oJson->addColumn('city');
+
+        $oJson->show();
+     }
+    ##fin_code
+        
+    Comme vous pouvez le voir ici, on appelle 4 méthodes de la couche modèle: la premiere comptant le nombre total d'enregistremetn, la seconde triant ou filtrant le résultat
+        
+    ##titre Les 4 méthodes à ajouter coté couche modèle
+    Dans notre exemple, on appelle une classe modèle author, voici les 4 méthodes à ajouter, je donne ici
+
+    exemple sous MySql/MariaDb
+    ##debut_code
+    //methode listant le nombre total d'enregistrements
+    public function findTotal(){
+       $oRow=$this->findOneSimple('SELECT count(*) as total FROM '.$this->sTable);
+       return $oRow->total;
+    }
+    //methode retournant les enregistrements trie et pagine
+    public function findListLimitOrderBy($start,$limit,$sField,$side){
+       return $this->findManySimple('SELECT * FROM '.$this->sTable.' ORDER BY '.$sField.' '.$side.' LIMIT '.$start.','.$limit);
+    }
+
+    //ici la meme chose incluant un filtre
+
+    //methode listant le nombre total d'enregistrements filtre
+    public function findTotalFiltered($tFilter){
+       foreach($tFilter as $sField => $sValue){
+           $tWhere[]=$sField.'=?';
+           $tValue[]=$sValue;
+       }
+       $oRow=$this->findOneSimple('SELECT count(*) as total FROM '.$this->sTable.' WHERE  '.implode('AND',$tWhere).'',$tValue);
+       return $oRow->total;
+    }
+    //methode retournant les enregistrements trie et pagine et filtre
+    public function findListFilteredAndLimitOrderBy($tFilter,$start,$limit,$sField,$side){
+       foreach($tFilter as $sField => $sValue){
+           $tWhere[]=$sField.'=?';
+           $tValue[]=$sValue;
+       }
+       return $this->findManySimple('SELECT * FROM '.$this->sTable.' WHERE  '.implode('AND',$tWhere).' ORDER BY '.$sField.' '.$side.' LIMIT '.$start.','.$limit,$tValue);
+    }
+    ##fin_code
+    
+    Même exemple pour SQL Server < 2012
+    ##debut_code
+    //methode listant le nombre total d'enregistrements
+    public function findTotal(){
+       $oRow=$this->findOneSimple('SELECT count(*) as total FROM '.$this->sTable);
+       return $oRow->total;
+    }
+    //methode retournant les enregistrements trie et pagine
+    public function findListLimitOrderBy($start,$limit,$sField,$side){
+       return $this->findManySimple('SELECT * FROM
+       (
+           SELECT TOP '.($start+$limit).' *, ROW_NUMBER() OVER (ORDER BY (SELECT 1)) AS rnum
+           FROM '.$this->sTable.' ORDER BY '.$sField.' '.$side.'
+       ) a
+       WHERE rnum > '.$start);
+    }
+
+    //ici la meme chose incluant un filtre
+
+    //methode listant le nombre total d'enregistrements filtre
+    public function findTotalFiltered($tFilter){
+       foreach($tFilter as $sField => $sValue){
+           $tWhere[]=$sField.'=?';
+           $tValue[]=$sValue;
+       }
+       $oRow=$this->findOneSimple('SELECT count(*) as total FROM '.$this->sTable.' WHERE  '.implode('AND',$tWhere).'',$tValue);
+       return $oRow->total;
+    }
+    //methode retournant les enregistrements trie et pagine et filtre
+    public function findListFilteredAndLimitOrderBy($tFilter,$start,$limit,$sField,$side){
+       foreach($tFilter as $sField => $sValue){
+           $tWhere[]=$sField.'=?';
+           $tValue[]=$sValue;
+       }
+       return $this->findManySimple('SELECT * FROM
+       (
+           SELECT TOP '.($start+$limit).' *, ROW_NUMBER() OVER (ORDER BY (SELECT 1)) AS rnum
+           FROM '.$this->sTable.' WHERE  '.implode('AND',$tWhere).' ORDER BY '.$sField.' '.$side.'
+       ) a
+       WHERE rnum > '.$start,$tValue);
+    }
+    ##fin_code
+        
+    ##titre Notes en plus
+    
+    ##titre Parametres de colonnes
+    Vous pouvez ajouter des parametres aux colonnes du tableau en passant un tableau en 3ème paramètre
+    Par exemple :
+    - largeur (width),
+    - alignement (align),
+    - redimensionnalbe (resizable),
+    - triable (sortable)
+    Plus d'information ici: wiki 
+        
+    Exple:
+    ##debut_code
+        $oTable->addColumn('Nom','firstname',array(
+                                   'width'=>100,
+                                   'align'=>true,
+                                   'resizable'=>true,
+                                   'sortable'=>true));
+    ##fin_code
+        
+    ##titre Paramètre "cellattr" : Modifier un attribut d'une cellule en fonction de son contexte
+    
+    On peut avoir besoin de modifier le style/la classe cellule en fonction du contexte
+
+    Par exemple passer en fond rouge si la ville est vide
+    ##debut_code
+    $oTable->addColumn('Code postal','zip',array(
+                               'cellattr'=>
+                                   "function(rowId,val,rawObject,cm,rdata){
+                                       if(rawObject.city==''){
+                                           return 'style=\'background:red\'';
+                                       }
+                                   }"));
+    ##fin_code
+        
+    ##image moduleGuriddocellattr.jpg
+    
+    On définit pour l'optin "cellattr" une fonction javascript contenant 5 arguments:
+    rowId: l'id de la ligne en cours
+    val: la valeur de la cellule courante
+    rawObject: l'objet contenant les valeurs de la ligne courante
+    cm : l'objet colModel de la colonne
+    rdata: est très similaire à rawObject
+
+    Comme on peut le voir , on retourne les attributs du td, on peut donc également ajouter un attribut onClick à notre cellule..
+
+    ##titre Paramètre "formatter" : Modifier le contenu d'une cellule en fonction de son contexte
+
+    On peut avoir besoin de modifier le contenu d'une cellule en fonction du contexte
+
+    Par exemple, ajouter un lien sur le nom si le champ monLien est renseigné (monLien qui peut être un champ caché, juste présent dans le json)
+
+        ##debut_code
+        $oTable->addColumn('Nom','firstname',array(
+                               'formatter'=>
+                                   "function ( cellValue, options, rowObject ){
+
+                                       if(rowObject.monLien!=''){
+
+                                           return '<a href="'+rowObject.link+'">'+cellValue+'</a> ';
+                                       }else{
+                                           return cellValue;
+                                       }
+                                   }"));
+        ##fin_code
+
+        ##image moduleGuriddoformatter.jpg
+        
+    On définit pour l'optin "cellattr" une fonction javascript contenant 3 arguments:
+    cellValue: la valeur de la cellule
+    options: les options du colModel correspondant
+    rowObject: l'objet contenant les valeurs de la ligne courante
+
+    Comme on peut le voir , on retourne la valeur de la cellule modifiée ou non
+
+        
+    ##titre Ajouter des groupement de colonnes
+    Vous pouvez faire des regroupement de colonne, par exemple
+    - Libelle de la colonne
+    - nombre du colspan
+    - nom de la colonne de début
+        
+    ##debut_code
+    $oTable->addGroupColumn('Contact',2,'firstname');
+
+    $oTable->addColumn('Nom','firstname',array('width'=>100));
+    $oTable->addColumn('Prenom','lastname');
+    $oTable->addColumn('Code postal','zip');
+    $oTable->addColumn('Ville','city');
+    ##fin_code
+
+    ##image moduleGuriddoGroup.jpg
+        
+    ##debut_code
+    $oTable->addGroupColumn('Adresse',2,'zip');
+
+    //$oTable->addHeaderWithOrder('ID','id');
+    $oTable->addColumn('Nom','firstname',array('width'=>100));
+    $oTable->addColumn('Prenom','lastname');
+    $oTable->addColumn('Code postal','zip');
+    $oTable->addColumn('Ville','city');
+    ##fin_code
+
+    ##image moduleGuriddoGroup2.jpg
+          
+                
+                
+    ]]></utilisation>
+    
+</market>
