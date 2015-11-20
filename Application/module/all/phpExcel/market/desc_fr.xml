@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<market>
+    <presentation><![CDATA[
+    Ce module est un module intégrable permettant de générer/exporter des fichier excel.
+    Il s'appuie sur la librairie PHPExcel: <a href="https://phpexcel.codeplex.com/">phpexcel.codeplex.com </a>    
+        
+    ]]></presentation>
+    
+    <actualites><![CDATA[
+    2015/09/20 : création du module
+    Pour simplifier l'utilisation de cette puissante librairie, un module vient d'être créé
+          
+        
+    ]]></actualites>
+    
+    <utilisation><![CDATA[
+    L'idée est de vous faciliter l'utilisation de cette librairie pour générer vos fichiers Excel
+    Vous pouvez télécharger ce module, l'utiliser mais surtout ne pas hésiter à le personnaliser pour vos applications afin de pouvoir le réutiliser.
+        
+    Télécharger un fichier Excel
+    ##debut_code
+    public function _index(){
+        //on instancie le module
+        $oModuleExcel=new module_phpExcel;
+
+        //on recupere ici l'objet PhpExcel
+        //dans la documentation equivalent a $objPHPExcel=new PHPExcel();
+        $objPHPExcel=$oModuleExcel->getObject();
+        
+        //a partir de la vous referez a la documentation pour personnaliser votre Excel
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', 'Hello');
+
+        //enfin ici pour forcer le telechargement du fichier
+        $oModuleExcel->download($objPHPExcel);
+    }
+    ##fin_code
+
+    Ecrire le fichier Excel
+    ##debut_code
+    public function _index(){
+        //on instancie le module
+        $oModuleExcel=new module_phpExcel;
+
+        //on recupere ici l'objet PhpExcel
+        //dans la documentation equivalent a $objPHPExcel=new PHPExcel();
+        $objPHPExcel=$oModuleExcel->getObject();
+
+        //a partir de la vous referez a la documentation pour personnaliser votre Excel
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', 'Hello');
+
+        //enfin ici pour sauvegarder le fichier
+        $oModuleExcel->save($objPHPExcel,'/tmp/monFichier.xls');
+   }    
+    ##fin_code
+        
+    ]]></utilisation>
+    
+</market>

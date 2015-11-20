@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<market>
+    <presentation><![CDATA[
+    Ce module est un module intégrable permettant d'intégrer un calendrier dans votre application.   
+        
+    ]]></presentation>
+    
+    <actualites><![CDATA[
+          
+        
+    ]]></actualites>
+    
+    <utilisation><![CDATA[
+    Dans votre fichier main.php de votre application, au sein de l'action de votre choix
+
+    Pour cela vous devez inclure ce module, par exemple le calendrier a "emplacement" par exemple "calendrier"
+    ##debut_code
+    $oView=new _view('module::action');
+    $oModuleCalendrier=new module_calendrier;
+    $oModuleCalendrier->sModuleAction='article::list'; //indiquer le couple module::action de la page parente
+
+    $oView->oViewCalendrier=$oModuleCalendrier->build(); //la methode build() doit retourner un objet _view
+    ##fin_code
+
+    et a partir de la, dans module/view/action.php
+    ##debut_code
+        <?php echo $this->oViewCalendrier->show();?>
+    ##fin_code
+        
+    Vous pouvez désactiver le changement d'année/mois
+    ##debut_code
+    $oModuleCalendrier=new module_calendrier;
+    $oModuleCalendrier->disableNavigation();
+    ##fin_code
+    
+    Vous pouvez également désactiver les liens sur les jour du calendrier
+        
+    ##debut_code
+    $oModuleCalendrier=new module_calendrier;
+    $oModuleCalendrier->disableLinks();
+    ##fin_code
+        
+    ]]></utilisation>
+    
+</market>
