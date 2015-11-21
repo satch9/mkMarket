@@ -200,6 +200,9 @@ function createPage($oPage){
 	file_put_contents($sRootPages.'fr/'.$oPage->name.'.xml', $oPage->build() );
 }
 function formate($sText){
+	
+	$sText=htmlentities($sText);
+	
 	$sText2=null;
 	$tLine=explode("\n",$sText);
 	
@@ -221,6 +224,7 @@ function formate($sText){
 				$bStartCode=true;
 				$line=null;
 			}else if(preg_match('/##fin_code/',$line)){
+				$sCode=  html_entity_decode($sCode);
 				$line='<div class="code">'.highlight_string($sCode,1).'</div>';
 				
 				$bStartCode=false;
