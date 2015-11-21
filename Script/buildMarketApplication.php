@@ -12,7 +12,7 @@ $tLang=array('fr','en');
 $tNavBrut=array(
 	'index' => array('Accueil','Home'),
 	'normal_list_1' => array('Modules pour Applications "Normales"','Normal compatibles extensions'),
-	'bootstrap_list_1' => array('Modules pour Applications "Bootstrap"','Bootstrap compatible extensions'),
+	//'bootstrap_list_1' => array('Modules pour Applications "Bootstrap"','Bootstrap compatible extensions'),
 	'plugin_list_1'=> array('Plugins','Plugins'),
 );	
 

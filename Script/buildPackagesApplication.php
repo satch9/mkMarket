@@ -50,8 +50,9 @@ $sPathPlugin=$sRootPathPlugin;
 //plugins
 $tPluginAll=scandir($sPathPlugin);
 foreach($tPluginAll as $sPlugin){
-	if(substr($sPlugin,0,1)=='.') continue;
-	file_put_contents($sRootPackagesPlugin.'/'.$sPlugin, file_get_contents($sPathPlugin.'/'.$sPlugin));
+	if(substr($sPlugin,0,1)=='.'){ continue; }
+	print " $sPlugin ".$sRootPackagesPlugin.'/'.$sPlugin.'.down'." \n";
+	file_put_contents($sRootPackagesPlugin.'/'.$sPlugin.'.down', file_get_contents($sPathPlugin.'/'.$sPlugin));
 }
 
 
