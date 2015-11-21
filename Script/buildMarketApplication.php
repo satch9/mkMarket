@@ -53,6 +53,19 @@ foreach($tType as $sType){
 
 		if(file_exists($sPathModule.'/'.$sModule.'/info.ini') ){//and file_exists($sPathModule.'/'.$sModule.'/market.xml')){
 
+			@mkdir($sRootPages.'/images/',0777);
+			
+			//$sRootPages
+			$tImages=scandir($sPathModule.'/'.$sModule.'/market/img/');
+			if($tImages){
+				foreach($tImages as $img){
+					if(substr($img,0,1)=='.') continue;
+					
+					@mkdir($sRootPages.'/images/'.$sModule);
+					copy($sPathModule.'/'.$sModule.'/market/img/'.$img,$sRootPages.'/images/'.$sModule.'/'.$img);
+				}
+			}
+			
 			$tIni=parse_ini_file($sPathModule.'/'.$sModule.'/info.ini');
 			//$oXml=simplexml_load_file($sPathModule.'/'.$sModule.'/market.xml');
 
@@ -201,7 +214,7 @@ function formate($sText){
 				$line='<h2>'.str_replace('##titre ','',$line).'</h2>';
 			}
 			else if(preg_match('/##image/',$line)){
-				$line='<img src="'.str_replace('##image ','',$line).'"/>';
+				$line='<img src="img/'.str_replace('##image ','',$line).'"/>';
 			}
 			
 			if(preg_match('/##debut_code/',$line)){
