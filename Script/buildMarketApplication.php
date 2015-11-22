@@ -224,8 +224,19 @@ function formate($sText){
 				$bStartCode=true;
 				$line=null;
 			}else if(preg_match('/##fin_code/',$line)){
+				
 				$sCode=  html_entity_decode($sCode);
-				$line='<div class="code">'.highlight_string($sCode,1).'</div>';
+				
+				if(preg_match('/<?php/',$sCode)==false){
+					$sCode2='<?php '."\n\n";
+				}else{
+					$sCode2=null;
+				}
+				$sCode2.=$sCode;
+				$sCode3=highlight_string($sCode2,1);
+				
+				
+				$line='<div class="code">'.$sCode3.'</div>';
 				
 				$bStartCode=false;
 				$sCode=null;
