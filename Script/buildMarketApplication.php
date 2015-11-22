@@ -217,7 +217,7 @@ function formate($sText){
 				$line='<h2>'.str_replace('##titre ','',$line).'</h2>';
 			}
 			else if(preg_match('/##image/',$line)){
-				$line='<img src="img/'.str_replace('##image ','',$line).'"/>';
+				$line='<img src="marketImage/'.str_replace('##image ','',$line).'"/>';
 			}
 			
 			if(preg_match('/##debut_code/',$line)){
