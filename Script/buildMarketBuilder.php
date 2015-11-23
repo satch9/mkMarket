@@ -10,6 +10,7 @@ $tLang=array('fr','en');
 
 $tNavBrut=array(
 	'index' => array('Accueil','Home'),
+	'all_list_1' => array('Pour toute les applications','For all kind of applications'),
 	'normal_list_1' => array('Compatibles Applications "Normales"','Normal compatibles extensions'),
 	'bootstrap_list_1' => array('Compatibles Applications "Bootstrap"','Bootstrap compatible extensions'),
 	'builder_list_1'=>array('Pour le Builder','Builder extensions'),
