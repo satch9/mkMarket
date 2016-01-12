@@ -42,13 +42,13 @@ $.jgrid.defaults.width = "<?php echo $this->iWidth?>";
 				},
 		<?php if($this->bGridView): ?>
 			"treeGrid": true,
-			"ExpandColumn": "<?= $this->sExpandColumn ?>",
+			"ExpandColumn": "<?php echo $this->sExpandColumn ?>",
 			"treeGridModel": "adjacency",
 			"treeReader": {
-				"level_field": "<?= $this->sLevelField ?>",
-				"parent_id_field": "<?= $this->sParentIdField ?>",
-				"leaf_field": "<?= $this->sLeafField ?>",
-				"expanded_field": "<?= $this->sExpandedField ?>"
+				"level_field": "<?php echo $this->sLevelField ?>",
+				"parent_id_field": "<?php echo $this->sParentIdField ?>",
+				"leaf_field": "<?php echo $this->sLeafField ?>",
+				"expanded_field": "<?php echo $this->sExpandedField ?>"
 			},
 		<?php endif; ?>
 				"gridview":true,
