@@ -47,28 +47,28 @@ class module_guriddo extends abstract_moduleembedded{
 	private $sPopupEdit=null;
 	private $sPopupAdd=null;
 
-        private $bGridView = false;
-        private $sExpandColumn = "grid";
-        private $sLevelField = "level_field";
-        private $sParentIdField = "parent_id_field";
-        private $sLeafField = "leaf_field";
-        private $sExpandedField = "expanded_field";
-        
-        public function setGridViewConfiguration($tGridConfiguration) {
-            $this->bGridView=true;
-            
-            if(isset($tGridConfiguration["sExpandColumn"]))
-                $this->sExpandColumn = $tGridConfiguration["sExpandColumn"];
-            if(isset($tGridConfiguration["sLevelField"]))
-                $this->sLevelField = $tGridConfiguration["sLevelField"];
-            if(isset($tGridConfiguration["sParentIdField"]))
-                $this->sParentIdField = $tGridConfiguration["sParentIdField"];
-            if(isset($tGridConfiguration["sLeafField"]))
-                $this->sLeafField = $tGridConfiguration["sLeafField"];
-            if(isset($tGridConfiguration["sExpandedField"]))
-                $this->sExpandedField = $tGridConfiguration["sExpandedField"];
-            
-        }
+	private $bGridView = false;
+	private $sExpandColumn = "grid";
+	private $sLevelField = "level_field";
+	private $sParentIdField = "parent_id_field";
+	private $sLeafField = "leaf_field";
+	private $sExpandedField = "expanded_field";
+
+	public function setGridViewConfiguration($tGridConfiguration) {
+		$this->bGridView=true;
+
+		if(isset($tGridConfiguration["sExpandColumn"]))
+			$this->sExpandColumn = $tGridConfiguration["sExpandColumn"];
+		if(isset($tGridConfiguration["sLevelField"]))
+			$this->sLevelField = $tGridConfiguration["sLevelField"];
+		if(isset($tGridConfiguration["sParentIdField"]))
+			$this->sParentIdField = $tGridConfiguration["sParentIdField"];
+		if(isset($tGridConfiguration["sLeafField"]))
+			$this->sLeafField = $tGridConfiguration["sLeafField"];
+		if(isset($tGridConfiguration["sExpandedField"]))
+			$this->sExpandedField = $tGridConfiguration["sExpandedField"];
+
+	}
 
 	public function setPopupEdit($sPopupEdit){
 		$this->sPopupEdit=$sPopupEdit;
@@ -204,12 +204,12 @@ class module_guriddo extends abstract_moduleembedded{
 		$oView->sPopupEdit=$this->sPopupEdit;
 		$oView->sPopupAdd=$this->sPopupAdd;
 		
-                $oView->bGridView=$this->bGridView;
-                $oView->sExpandColumn = $this->sExpandColumn;
-                $oView->sLevelField = $this->sLevelField;
-                $oView->sParentIdField = $this->sParentIdField;
-                $oView->sLeafField = $this->sLeafField;
-                $oView->sExpandedField = $this->sExpandedField;
+		$oView->bGridView=$this->bGridView;
+		$oView->sExpandColumn = $this->sExpandColumn;
+		$oView->sLevelField = $this->sLevelField;
+		$oView->sParentIdField = $this->sParentIdField;
+		$oView->sLeafField = $this->sLeafField;
+		$oView->sExpandedField = $this->sExpandedField;
 		
 		if($this->defaultSortField){
 			$oView->defaultSortField=$this->defaultSortField;

@@ -40,17 +40,17 @@ $.jgrid.defaults.width = "<?php echo $this->iWidth?>";
 						"repeatitems":false
 					}
 				},
-		<?php if($this->bGridView): ?>
-			"treeGrid": true,
-			"ExpandColumn": "<?php echo $this->sExpandColumn ?>",
-			"treeGridModel": "adjacency",
-			"treeReader": {
-				"level_field": "<?php echo $this->sLevelField ?>",
-				"parent_id_field": "<?php echo $this->sParentIdField ?>",
-				"leaf_field": "<?php echo $this->sLeafField ?>",
-				"expanded_field": "<?php echo $this->sExpandedField ?>"
-			},
-		<?php endif; ?>
+				<?php if($this->bGridView): ?>
+				"treeGrid": true,
+				"ExpandColumn": "<?php echo $this->sExpandColumn ?>",
+				"treeGridModel": "adjacency",
+				"treeReader": {
+					"level_field": "<?php echo $this->sLevelField ?>",
+					"parent_id_field": "<?php echo $this->sParentIdField ?>",
+					"leaf_field": "<?php echo $this->sLeafField ?>",
+					"expanded_field": "<?php echo $this->sExpandedField ?>"
+				},
+				<?php endif; ?>
 				"gridview":true,
 				"viewrecords": true,
 				"url":"<?php echo _root::getLink($this->sJsonLink)?>",
