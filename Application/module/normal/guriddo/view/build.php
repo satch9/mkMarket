@@ -40,6 +40,17 @@ $.jgrid.defaults.width = "<?php echo $this->iWidth?>";
 						"repeatitems":false
 					}
 				},
+		<?php if($this->bGridView): ?>
+			"treeGrid": true,
+			"ExpandColumn": "<?= $this->sExpandColumn ?>",
+			"treeGridModel": "adjacency",
+			"treeReader": {
+				"level_field": "<?= $this->sLevelField ?>",
+				"parent_id_field": "<?= $this->sParentIdField ?>",
+				"leaf_field": "<?= $this->sLeafField ?>",
+				"expanded_field": "<?= $this->sExpandedField ?>"
+			},
+		<?php endif; ?>
 				"gridview":true,
 				"viewrecords": true,
 				"url":"<?php echo _root::getLink($this->sJsonLink)?>",
