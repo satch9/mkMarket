@@ -1,0 +1,54 @@
+<?xml version="1.0" ?><page><type><![CDATA[list]]></type>
+<title><![CDATA[Liste bootstrap]]></title>
+<content><![CDATA[]]></content>
+<id><![CDATA[]]></id>
+<version><![CDATA[]]></version>
+<author><![CDATA[]]></author>
+<nav><link href="index"><![CDATA[Home]]></link>
+<link href="all_list_1"><![CDATA[For all kind of applications]]></link>
+<link href="normal_list_1"><![CDATA[Normal compatibles extensions]]></link>
+<link href="bootstrap_list_1"><![CDATA[Bootstrap compatible extensions]]></link>
+<link href="builder_list_1"><![CDATA[Builder extensions]]></link>
+</nav>
+<data><bloc><title><![CDATA[Create an authentification module]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_bootstrap_auth]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+<bloc><title><![CDATA[Create an authentification module with inscription]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_bootstrap_authInscription]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+<bloc><title><![CDATA[Create a CRUD module]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_bootstrap_crud]]></id>
+<version><![CDATA[1.0.3]]></version>
+</bloc>
+<bloc><title><![CDATA[Create an embedded CRUD module]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_bootstrap_crudEmbedded]]></id>
+<version><![CDATA[1.0.3]]></version>
+</bloc>
+<bloc><title><![CDATA[Create a read-only module]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_bootstrap_crudReadonly]]></id>
+<version><![CDATA[1.0.1]]></version>
+</bloc>
+<bloc><title><![CDATA[Create a menu module]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_bootstrap_menu]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+<bloc><title><![CDATA[Create a module]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_bootstrap_module]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+<bloc><title><![CDATA[Create an embedded module]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_bootstrap_moduleEmbedded]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+</data>
+</page>

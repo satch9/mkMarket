@@ -1,0 +1,24 @@
+<?xml version="1.0" ?><page><type><![CDATA[list]]></type>
+<title><![CDATA[Liste builder]]></title>
+<content><![CDATA[]]></content>
+<id><![CDATA[]]></id>
+<version><![CDATA[]]></version>
+<author><![CDATA[]]></author>
+<nav><link href="index"><![CDATA[Home]]></link>
+<link href="all_list_1"><![CDATA[For all kind of applications]]></link>
+<link href="normal_list_1"><![CDATA[Normal compatibles extensions]]></link>
+<link href="bootstrap_list_1"><![CDATA[Bootstrap compatible extensions]]></link>
+<link href="builder_list_1"><![CDATA[Builder extensions]]></link>
+</nav>
+<data><bloc><title><![CDATA[Builder market]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_builder_market]]></id>
+<version><![CDATA[1.1.2]]></version>
+</bloc>
+<bloc><title><![CDATA[Application menu (builder)]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_builder_menu]]></id>
+<version><![CDATA[1.1.0]]></version>
+</bloc>
+</data>
+</page>

@@ -1,0 +1,89 @@
+<?xml version="1.0" ?><page><type><![CDATA[list]]></type>
+<title><![CDATA[Liste normal]]></title>
+<content><![CDATA[]]></content>
+<id><![CDATA[]]></id>
+<version><![CDATA[]]></version>
+<author><![CDATA[]]></author>
+<nav><link href="index"><![CDATA[Accueil]]></link>
+<link href="all_list_1"><![CDATA[Pour toute les applications]]></link>
+<link href="normal_list_1"><![CDATA[Compatibles Applications "Normales"]]></link>
+<link href="bootstrap_list_1"><![CDATA[Compatibles Applications "Bootstrap"]]></link>
+<link href="builder_list_1"><![CDATA[Pour le Builder]]></link>
+</nav>
+<data><bloc><title><![CDATA[Cr&eacute;er un module d\'authentification]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_normal_auth]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+<bloc><title><![CDATA[Cr&eacute;er un module d\'authentification avec inscription]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_normal_authInscription]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+<bloc><title><![CDATA[Cr&eacute;er un module CRUD]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_normal_crud]]></id>
+<version><![CDATA[1.0.3]]></version>
+</bloc>
+<bloc><title><![CDATA[Cr&eacute;er un module CRUD int&eacute;grable]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_normal_crudEmbedded]]></id>
+<version><![CDATA[1.0.2]]></version>
+</bloc>
+<bloc><title><![CDATA[Cr&eacute;er un module lecture seule int&eacute;grable]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_normal_crudEmbeddedReadonly]]></id>
+<version><![CDATA[1.0.1]]></version>
+</bloc>
+<bloc><title><![CDATA[Cr&eacute;er un module CRUD Guriddo]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_normal_crudGuriddo]]></id>
+<version><![CDATA[1.0.2]]></version>
+</bloc>
+<bloc><title><![CDATA[Cr&eacute;er un module CRUD Multi-ligne]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_normal_crudMulti]]></id>
+<version><![CDATA[1.0.2]]></version>
+</bloc>
+<bloc><title><![CDATA[Cr&eacute;er un module Lecture seule]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_normal_crudReadonly]]></id>
+<version><![CDATA[1.0.1]]></version>
+</bloc>
+<bloc><title><![CDATA[Cr&eacute;er un module menu]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_normal_menu]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+<bloc><title><![CDATA[Cr&eacute;er un module]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_normal_module]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+<bloc><title><![CDATA[Cr&eacute;er un module int&eacute;grable]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_normal_moduleEmbedded]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+<bloc><title><![CDATA[Ajouter une gestion de droits &agrave; votre application]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_normal_rightsManager]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+<bloc><title><![CDATA[Ajouter une gestion de droits multi-groupes &agrave; votre application]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_normal_rightsManagerMulti]]></id>
+<version><![CDATA[1.0.2]]></version>
+</bloc>
+<bloc><title><![CDATA[C&eacuteer un formulaire]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_normal_viewForm]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+<bloc><title><![CDATA[Cr&eacute;er un tableau simple (avec le module table)]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_normal_viewTable]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+</data>
+</page>

@@ -1,0 +1,24 @@
+<?xml version="1.0" ?><page><type><![CDATA[list]]></type>
+<title><![CDATA[Liste builder]]></title>
+<content><![CDATA[]]></content>
+<id><![CDATA[]]></id>
+<version><![CDATA[]]></version>
+<author><![CDATA[]]></author>
+<nav><link href="index"><![CDATA[Accueil]]></link>
+<link href="all_list_1"><![CDATA[Pour toute les applications]]></link>
+<link href="normal_list_1"><![CDATA[Compatibles Applications "Normales"]]></link>
+<link href="bootstrap_list_1"><![CDATA[Compatibles Applications "Bootstrap"]]></link>
+<link href="builder_list_1"><![CDATA[Pour le Builder]]></link>
+</nav>
+<data><bloc><title><![CDATA[Le market du builder]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_builder_market]]></id>
+<version><![CDATA[1.1.2]]></version>
+</bloc>
+<bloc><title><![CDATA[Menu de l application (builder)]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_builder_menu]]></id>
+<version><![CDATA[1.1.0]]></version>
+</bloc>
+</data>
+</page>

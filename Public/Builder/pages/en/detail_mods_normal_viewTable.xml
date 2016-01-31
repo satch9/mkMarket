@@ -1,0 +1,13 @@
+<?xml version="1.0" ?><page><type><![CDATA[detail]]></type>
+<title><![CDATA[Create a simple table]]></title>
+<content><![CDATA[]]></content>
+<id><![CDATA[mods_normal_viewTable]]></id>
+<version><![CDATA[1.0.0]]></version>
+<author><![CDATA[mkframework]]></author>
+<nav><link href="index"><![CDATA[Home]]></link>
+<link href="all_list_1"><![CDATA[For all kind of applications]]></link>
+<link href="normal_list_1"><![CDATA[Normal compatibles extensions]]></link>
+<link href="bootstrap_list_1"><![CDATA[Bootstrap compatible extensions]]></link>
+<link href="builder_list_1"><![CDATA[Builder extensions]]></link>
+</nav>
+</page>

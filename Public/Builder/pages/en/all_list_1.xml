@@ -1,0 +1,59 @@
+<?xml version="1.0" ?><page><type><![CDATA[list]]></type>
+<title><![CDATA[Liste all]]></title>
+<content><![CDATA[]]></content>
+<id><![CDATA[]]></id>
+<version><![CDATA[]]></version>
+<author><![CDATA[]]></author>
+<nav><link href="index"><![CDATA[Home]]></link>
+<link href="all_list_1"><![CDATA[For all kind of applications]]></link>
+<link href="normal_list_1"><![CDATA[Normal compatibles extensions]]></link>
+<link href="bootstrap_list_1"><![CDATA[Bootstrap compatible extensions]]></link>
+<link href="builder_list_1"><![CDATA[Builder extensions]]></link>
+</nav>
+<data><bloc><title><![CDATA[my module]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_all_example]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+<bloc><title><![CDATA[Create model part]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_all_model]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+<bloc><title><![CDATA[Create a csv database]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_all_sgbdCsv]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+<bloc><title><![CDATA[Create a json database]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_all_sgbdJson]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+<bloc><title><![CDATA[Create index on json database]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_all_sgbdJsonIndex]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+<bloc><title><![CDATA[Create a sqlite database]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_all_sgbdSqlite]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+<bloc><title><![CDATA[Create xml database]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_all_sgbdXml]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+<bloc><title><![CDATA[Create index on xml database]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_all_sgbdXmlIndex]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+<bloc><title><![CDATA[Create phpUnit class]]></title>
+<author><![CDATA[mkframework]]></author>
+<id><![CDATA[mods_all_testunit]]></id>
+<version><![CDATA[1.0.0]]></version>
+</bloc>
+</data>
+</page>

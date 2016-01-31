@@ -1,0 +1,13 @@
+<?xml version="1.0" ?><page><type><![CDATA[detail]]></type>
+<title><![CDATA[Cr&eacute;er un module menu]]></title>
+<content><![CDATA[]]></content>
+<id><![CDATA[mods_bootstrap_menu]]></id>
+<version><![CDATA[1.0.0]]></version>
+<author><![CDATA[mkframework]]></author>
+<nav><link href="index"><![CDATA[Accueil]]></link>
+<link href="all_list_1"><![CDATA[Pour toute les applications]]></link>
+<link href="normal_list_1"><![CDATA[Compatibles Applications "Normales"]]></link>
+<link href="bootstrap_list_1"><![CDATA[Compatibles Applications "Bootstrap"]]></link>
+<link href="builder_list_1"><![CDATA[Pour le Builder]]></link>
+</nav>
+</page>
