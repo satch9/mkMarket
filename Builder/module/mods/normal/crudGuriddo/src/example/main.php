@@ -82,7 +82,17 @@ class module_#MODULE# extends abstract_module{
 			//une fois enregistre on redirige (vers la page liste)
 			 
 		}else{
-			return $#oExamplemodel#->getListError();
+		      header('Content-Type: application/json');
+
+		      $tListError=$#oExamplemodel#->getListError();
+		      
+		      $tError=array();
+		      foreach($tListError as $key => $line){
+			$tError[]='<p>'.$key.':'.implode('',$line).'</p>';
+		      }
+		     
+		      echo json_encode( array('error'=> implode('',$tError)) );
+		      exit;
 		}
 	}
 
