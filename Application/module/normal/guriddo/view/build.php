@@ -40,17 +40,6 @@ $.jgrid.defaults.width = "<?php echo $this->iWidth?>";
 						"repeatitems":false
 					}
 				},
-				<?php if($this->bGridView): ?>
-				"treeGrid": true,
-				"ExpandColumn": "<?php echo $this->sExpandColumn ?>",
-				"treeGridModel": "adjacency",
-				"treeReader": {
-					"level_field": "<?php echo $this->sLevelField ?>",
-					"parent_id_field": "<?php echo $this->sParentIdField ?>",
-					"leaf_field": "<?php echo $this->sLeafField ?>",
-					"expanded_field": "<?php echo $this->sExpandedField ?>"
-				},
-				<?php endif; ?>
 				"gridview":true,
 				"viewrecords": true,
 				"url":"<?php echo _root::getLink($this->sJsonLink)?>",
@@ -141,6 +130,16 @@ $.jgrid.defaults.width = "<?php echo $this->iWidth?>";
                     <?php if($this->sPopupEdit):?>
 					template:<?php echo json_encode($this->sPopupEdit)?>,
 					<?php endif;?>
+					closeAfterEdit: true,
+					afterSubmit : function( data, postdata, oper) {
+						var response = data.responseJSON;
+						if (response && response.hasOwnProperty("error")) {
+							if(response.error.length) {
+								return [false,response.error ];
+							}
+						}
+						return [true,"",""];
+					},
                     errorTextFormat: function (data) {
                         return 'Error: ' + data.responseText;
                     }
@@ -150,6 +149,15 @@ $.jgrid.defaults.width = "<?php echo $this->iWidth?>";
 					<?php if($this->sPopupAdd):?>
 					template: <?php echo json_encode($this->sPopupAdd)?>,
 					<?php endif;?>
+					afterSubmit : function( data, postdata, oper) {
+						var response = data.responseJSON;
+						if (response && response.hasOwnProperty("error")) {
+							if(response.error.length) {
+								return [false,response.error ];
+							}
+						}
+						return [true,"",""];
+					},
                     errorTextFormat: function (data) {
                         return 'Error: ' + data.responseText;
                     }

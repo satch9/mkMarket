@@ -10,8 +10,6 @@
     ]]></presentation>
     
     <actualites><![CDATA[
-    2016/01/12: ajout du support treeGrid
-
     2015/08/28 : correction d'un bug sur le CRUD Guriddo
 Correction du paramétrage de la clé primaire du tableau pour corriger un problème dans la génération de formulaire.
         
@@ -296,18 +294,6 @@ Correction du paramétrage de la clé primaire du tableau pour corriger un probl
     ##fin_code
 
     ##image moduleGuriddoGroup2.jpg
-
-    ##titre Utilisez la vue arborescence
-
-    ##debut_code
-    $oTable->setGridViewConfiguration(array(
-      "sExpandColumn" => 'SYST_Name',
-      "sLevelField" => 'levelField',
-      "sParentIdField" => 'SYST_Father',
-      "sLeafField" => 'isLeaf',
-      "sExpandedField" => 'isExpanded')
-    );
-    ##fin_code
           
                 
                 
