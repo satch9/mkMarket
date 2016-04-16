@@ -48,66 +48,70 @@ foreach($tType as $sType){
 	
 	$tData=array();
 
-	$tModulesAll=scandir($sPathModule);
-	foreach($tModulesAll as $sModule){
+	if(file_exists($sPathModule)){
+	  $tModulesAll=scandir($sPathModule);
+	  foreach($tModulesAll as $sModule){
 
-		if(file_exists($sPathModule.'/'.$sModule.'/info.ini') ){//and file_exists($sPathModule.'/'.$sModule.'/market.xml')){
+		  if(file_exists($sPathModule.'/'.$sModule.'/info.ini') ){//and file_exists($sPathModule.'/'.$sModule.'/market.xml')){
 
-			@mkdir($sRootPages.'/images/',0777);
-			
-			//$sRootPages
-			$tImages=scandir($sPathModule.'/'.$sModule.'/market/img/');
-			if($tImages){
-				foreach($tImages as $img){
-					if(substr($img,0,1)=='.') continue;
-					
-					@mkdir($sRootPages.'/images/'.$sModule);
-					copy($sPathModule.'/'.$sModule.'/market/img/'.$img,$sRootPages.'/images/'.$sModule.'/'.$img);
-				}
-			}
-			
-			$tIni=parse_ini_file($sPathModule.'/'.$sModule.'/info.ini');
-			//$oXml=simplexml_load_file($sPathModule.'/'.$sModule.'/market.xml');
+			  @mkdir($sRootPages.'/images/',0777);
+			  
+			  //$sRootPages
+			  if(file_exists($sPathModule.'/'.$sModule.'/market/img/') ){
+			    $tImages=scandir($sPathModule.'/'.$sModule.'/market/img/');
+			    if($tImages){
+				    foreach($tImages as $img){
+					    if(substr($img,0,1)=='.') continue;
+					    
+					    @mkdir($sRootPages.'/images/'.$sModule);
+					    copy($sPathModule.'/'.$sModule.'/market/img/'.$img,$sRootPages.'/images/'.$sModule.'/'.$img);
+				    }
+			    }
+			  }
+			  
+			  $tIni=parse_ini_file($sPathModule.'/'.$sModule.'/info.ini');
+			  //$oXml=simplexml_load_file($sPathModule.'/'.$sModule.'/market.xml');
 
-			foreach($tLang as $lang){
-				$oData=new stdclass;
-				$oData->title=$tIni['title.'.$lang];
-				$oData->id=$tIni['id'];;
-				$oData->author=$tIni['author'];
-				$oData->version=$tIni['version'];
-				$tData[$lang][]=$oData;
+			  foreach($tLang as $lang){
+				  $oData=new stdclass;
+				  $oData->title=$tIni['title.'.$lang];
+				  $oData->id=$tIni['id'];;
+				  $oData->author=$tIni['author'];
+				  $oData->version=$tIni['version'];
+				  $tData[$lang][]=$oData;
 
-				
-				//fr
-				$oPage=new Page;
-				$oPage->name='detail_'.$oData->id;
-				$oPage->type='detail_module';
-				$oPage->author=$tIni['author'];
-				$oPage->title=$tIni['title.'.$lang];
-				$oPage->id=(string)$oData->id;
-				$oPage->version=$tIni['version'];
+				  
+				  //fr
+				  $oPage=new Page;
+				  $oPage->name='detail_'.$oData->id;
+				  $oPage->type='detail_module';
+				  $oPage->author=$tIni['author'];
+				  $oPage->title=$tIni['title.'.$lang];
+				  $oPage->id=(string)$oData->id;
+				  $oPage->version=$tIni['version'];
 
-				$sDescFile=$sPathModule.'/'.$sModule.'/market/desc_'.$lang.'.xml';
-				if(file_exists($sDescFile)){
-					$oXml=  simplexml_load_file($sDescFile);
-					
-					$oPage->presentation=formate( (string)$oXml->presentation);
-					$oPage->actualites=formate( (string)$oXml->actualites);
-					$oPage->utilisation=formate( (string)$oXml->utilisation);
-				}
-								
-				$oPage->content=null;
-				
-								
-				$oPage->tNav=$tNav[$lang];
-				$oPage->save($lang);
-			}
+				  $sDescFile=$sPathModule.'/'.$sModule.'/market/desc_'.$lang.'.xml';
+				  if(file_exists($sDescFile)){
+					  $oXml=  simplexml_load_file($sDescFile);
+					  
+					  $oPage->presentation=formate( (string)$oXml->presentation);
+					  $oPage->actualites=formate( (string)$oXml->actualites);
+					  $oPage->utilisation=formate( (string)$oXml->utilisation);
+				  }
+								  
+				  $oPage->content=null;
+				  
+								  
+				  $oPage->tNav=$tNav[$lang];
+				  $oPage->save($lang);
+			  }
 
-			
+			  
 
-		}
+		  }
 
 
+	  }
 	}
 	foreach($tLang as $lang){
 		if(isset($tData[$lang])){
