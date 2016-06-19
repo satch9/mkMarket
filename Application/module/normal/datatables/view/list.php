@@ -22,9 +22,12 @@
 
 $(document).ready(function() {
     $('#<?php echo $this->idTable?>').DataTable( {
+	"pageLength":<?php echo $this->iLimit?>,
         "processing": true,
         "serverSide": true,
-        "ajax": "<?php echo _root::getLink($this->sJsonLink)?>"
+        "ajax": "<?php echo _root::getLink($this->sJsonLink)?>",
+        "lengthMenu":<?php echo json_encode($this->tLimit)?>,
+        'searching':false,
     } );
 } );
 

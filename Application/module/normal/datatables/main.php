@@ -79,6 +79,7 @@
 		$oView->idTable=$this->idTable;
 
 		$oView->iLimit=$this->iLimit;
+		$oView->tLimit=$this->tRowList;
 		$oView->sJsonLink=$this->sJsonLink;
 		$oView->tHeader=$this->tHeader;
 
