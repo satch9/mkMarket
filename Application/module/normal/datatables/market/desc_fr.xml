@@ -63,8 +63,6 @@
 		
 		$this->oLayout->add('main',$oView);
 
-       //assigner la vue retournee a votre layout
-       $this->oLayout->add('main',$oView);
     }
     ##fin_code
     
