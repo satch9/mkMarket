@@ -3,7 +3,7 @@ class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
 
 	protected $sModule='mods_normal_crudGuriddo';
 	protected $sModuleView='mods/normal/crudGuriddo';
-	
+
 	public function _index(){
 		$bGuriddoExist=false;
 		$bGuriddoPublicExist=false;
@@ -11,7 +11,7 @@ class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
 		$bModelPaginationExist=false;
 		$bModelFilterCountExist=false;
 		$bModelFilterPaginationExist=false;
-		
+
 		//check guriddo
 		if(file_exists(_root::getConfigVar('path.generation')._root::getParam('id').'/module/guriddo')){
 			$bGuriddoExist=true;
@@ -33,29 +33,29 @@ class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
 			require_once( $oFile->getAdresse() );
 			$sClassFoo=substr($oFile->getName(),0,-4);
 			$oModelFoo=new $sClassFoo;
-			
+
 			if( method_exists( $oModelFoo, 'getSelect')){
 				$tRowMethodes[substr($oFile->getName(),0,-4)]=substr($oFile->getName(),0,-4).'::getSelect()';
 			}
 		}
-		
+
 		$oTpl= $this->getView('index');
 		$oTpl->bGuriddo=$bGuriddoExist;
 		$oTpl->bGuriddoPublicExist=$bGuriddoPublicExist;
-		
+
 		$oTpl->pathGenerated=_root::getConfigVar('path.generation')._root::getParam('id');
 		$oTpl->pathModule=_root::getConfigVar('path.generation')._root::getParam('id').'/module';
 		$oTpl->pathPublic=_root::getConfigVar('path.generation')._root::getParam('id').'/public/';
-		
+
 		if(_root::getParam('class') !='' ){
-			
+
 			$sClass=substr(_root::getParam('class'),0,-4);
 			require_once(_root::getConfigVar('path.generation')._root::getParam('id').'/model/'.$sClass.'.php');
 
 			$oTpl->class=$sClass;
-			
+
 			$oModel=new $sClass;
-			
+
 			if( method_exists( $oModel, 'findTotal')){
 				$bModelCountExist=true;
 			}
@@ -72,21 +72,21 @@ class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
 			$tColumn=module_builder::getTools()->getListColumnFromClass($sClass);
 			$oTpl->sClass=$sClass;
 			$oTpl->tSortColumn=$tColumn;
-			
+
 			$tId=module_builder::getTools()->getIdTabFromClass($sClass);
 			foreach($tColumn as $i => $sColumn){
 				if(in_array($sColumn, $tId) ){
 					unset($tColumn[$i]);
 				}
 			}
-			
+
 			$oTpl->tColumn=$tColumn;
-			
+
 			$oTpl->tRowMethodes=$tRowMethodes;
 
 			$oTpl->sModuleToCreate=$oModel->getTable();
 		}
-		
+
 		if($this->isPost()){
 			$sModuleToCreate=_root::getParam('moduleToCreate');
 			$sClass=_root::getParam('sClass');
@@ -96,9 +96,9 @@ class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
 			$tEnable=_root::getParam('tEnable');
 
 			$sDefaultField=_root::getParam('defaultSort');
-			
+
 			$tTableOption=array();
-			
+
 			$tTableOption['width']=_root::getParam('tableWidth');
 			$tTableOption['height']=_root::getParam('tableHeight');
 			$tTableOption['limit']=_root::getParam('tableLimit');
@@ -108,47 +108,47 @@ class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
 					unset($tColumn[$i]);
 				}
 			}
-			
+
 			require_once(_root::getConfigVar('path.generation')._root::getParam('id').'/model/'.$sClass.'.php');
 			$oModel=new $sClass;
 			$sModule=$sModuleToCreate;
-			
+
 			$tCrud= _root::getParam('crud',null);
-			
+
 			$bWithPagination=_root::getParam('withPagination');
 
 			$this->genModelMain($sModuleToCreate,$oModel->getTable(),$sClass,$tColumn,$tLabel,$sDefaultField,$tTableOption,$tCrud,$bWithPagination);
 			$this->genModelTpl($sModuleToCreate,$sClass,$tColumn,$oModel->getTable(),$tCrud,$tLabel);
-			
+
 			$msg=trR('moduleGenereAvecSucces',array('#MODULE#'=>$sModule));
 			$detail=trR('creationRepertoire',array('#REPERTOIRE#'=>'module/'.$sModule));
 			$detail.='<br />'.trR('creationRepertoire',array('#REPERTOIRE#'=>'module/'.$sModule.'/view'));
 			$detail.='<br />'.trR('CreationDuFichierVAR',array('#FICHIER#'=>'module/'.$sModule.'/main.php'));
 			$detail.='<br />'.trR('CreationDuFichierVAR',array('#FICHIER#'=>'module/'.$sModule.'/view/list.php'));
-			
+
 			$detail.='<br/><br/>'.tr('accessibleVia').'<a href="'._root::getConfigVar('path.generation')._root::getParam('id').'/public/index.php?:nav='.$sModule.'::index">index.php?:nav='.$sModule.'::index</a>';
-			
+
 		}
 
 		$oTpl->bModelFilterCountExist=$bModelFilterCountExist;
 		$oTpl->bModelFilterPaginationExist=$bModelFilterPaginationExist;
 		$oTpl->bModelCountExist=$bModelCountExist;
 		$oTpl->bModelPaginationExist=$bModelPaginationExist;
-		
+
 		$oTpl->msg=$msg;
 		$oTpl->detail=$detail;
 		$oTpl->tFile=$tFile;
 		return $oTpl;
-	
+
 	}
-	
+
 	private function genModelMain($sModule,$sTableName,$sClass,$tColumn,$tLabel,$sDefaultSortField,$tTableOption,$tCrud,$bWithPagination){
 		//$tColumn=_root::getParam('tColumn');
 		$tType=_root::getParam('tType');
 
 		/*SOURCE*/$oSourceMain=$this->getObjectSource('example/main.php');
 		/*SOURCE*/$oSourceMain->setPattern('#MODULE#',$sModule);
-		
+
 		$tReplace=array(
 			'#oExamplemodel#' => 'o'.ucfirst($sTableName),
 			'#tExamplemodel#' => 't'.ucfirst($sTableName),
@@ -161,12 +161,12 @@ class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
 			'#icijoins#'=>null,
 		);
 
-	 
+
 
 		foreach($tReplace as $sKey=>$sValue){
 			/*SOURCE*/$oSourceMain->setPattern($sKey,$sValue);
 		}
-		
+
 		$uploadsave=null;
 		$sMethodList=null;
 		$sMethodListJson=null;
@@ -175,17 +175,19 @@ class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
 		$sMethodShow=null;
 		$sMethodDelete=null;
 		$sMethodProcessDelete=null;
-		
-		
+
+
 		$tab="\t\t\t";
 		$ret="\n";
-		
+
 		$sPaginationList='';
-		
+
 		$sJointures='';
 		$jsonjointures='';
 		$jsonJointureTab='';
-		
+
+		$sJsonGetSelects='';
+
 		$tListSortFieldAllowed=array("'$sDefaultSortField'");
 		$sListSortFieldAllowed='';
 		$sListColumns='';
@@ -202,12 +204,14 @@ class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
 
 				$tOption['edittype']="'select'";
 				$jsonJointureTab.=$oSourceMain->getSnippet('codetJoin',array('#examplemodel#'=>substr($sType,7)));
-				
+
 				$jsonjointures.=$oSourceMain->getSnippet('jsonjointures',array('#examplemodel#'=>substr($sType,7),'#column#'=>$sColumn));
-				
+
 				$sJointures.=$oSourceMain->getSnippet('sJointures',array('#examplemodel#'=>substr($sType,7),'#column#'=>$sColumn));
-				
-				$tOption['editoptions']='$o'.substr($sType,7);
+
+				$sJsonGetSelects.= $oSourceMain->getSnippet('jsonGetSelect',array('#examplemodel#'=>substr($sType,7)));
+
+				$tOption['editoptions']='array(\'value\'=>'.substr($sType,7).'::getInstance()->getSelect())';
 
 				if($tOption){
 					$sOption='array(';
@@ -226,12 +230,12 @@ class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
 																'#exampleOption#'=>$sOption,
 																'#examplecolumnLabel#'=>$tLabel[$i],
 																'#examplecolumn#'=>$sColumn,
-																) 
+																)
 			);
-			
+
 			$tmpLine.="\n\t\t";
 			$sListColumns.=$tmpLine;
-			
+
 			$tmpLine=$oSourceMain->getSnippet('methodJsonListColumn',array(
 															'#examplecolumn#'=>$sColumn,
 															)
@@ -240,14 +244,14 @@ class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
 			$tmpLine.="\n";
 
 			$sJsonColumns.=$tmpLine;
-			
+
 			$tListSortFieldAllowed[]="'$sColumn'";
 		}
 		$sListSortFieldAllowed=implode(',',$tListSortFieldAllowed);
-		
+
 		$stColumn='array('.implode(',',$tArrayColumn).');';
 		$stColumnUpload='array('.implode(',',$tArrayColumnUpload).');';
-		
+
 		if($tArrayColumnUpload){
 			$uploadsave=$oSourceMain->getSnippet('uploadsave',array(
 											'#tColumnUpload#'=>$stColumnUpload,
@@ -255,33 +259,44 @@ class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
 											));
 		}
 
-		
-		
-		
+
+
+
 		$sCrudEnable=null;
 		if(in_array('crudNew',$tCrud)){
 			$sMethodNew=$oSourceMain->getSnippet('methodNew',$tReplace);
 
 			$sCrudEnable.='$oTable->enableAdd(_root::getLink(\''.$sModule.'::postJson\'));'."\n\t\t";
 		}
-		
+
 		if(in_array('crudEdit',$tCrud)){
 			$sMethodEdit=$oSourceMain->getSnippet('methodEdit',$tReplace);
 
 			$sCrudEnable.='$oTable->enableEdit(_root::getLink(\''.$sModule.'::postJson\'));'."\n\t\t";
 		}
-		
+
 		if(in_array('crudShow',$tCrud)){
 			$sMethodShow=$oSourceMain->getSnippet('methodShow',$tReplace);
 
 			$sCrudEnable.='$oTable->enableShow();'."\n\t\t";
 		}
-		
+
 		if(in_array('crudDelete',$tCrud)){
 			$sMethodDelete=$oSourceMain->getSnippet('methodDelete',$tReplace);
 			$sMethodProcessDelete=$oSourceMain->getSnippet('methodProcessDelete',$tReplace);
 
 			$sCrudEnable.='$oTable->enableDelete();'."\n\t\t";
+		}
+
+		if($jsonjointures!=''){
+
+			$sJsonJointure= $oSourceMain->getSnippet('foreachJsonData',array(
+				'#icijsonline#'=>$jsonjointures,
+				'#iciJsonGetSelect#'=>$sJsonGetSelects,
+			));
+		}else{
+			$sJsonJointure=$jsonjointures;
+
 		}
 
 		$tReplaceJson=$tReplace;
@@ -290,7 +305,7 @@ class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
 		$tReplaceJson['#icijsoncolumns#']=$sJsonColumns;
 		$tReplaceJson['#crudEnable#']=$sCrudEnable;
 		$tReplaceJson['#iciDefaultSortField#']=$sDefaultSortField;
-		$tReplaceJson['#icijsonjointures#']=$jsonjointures;
+		$tReplaceJson['#icijsonjointures#']=$sJsonJointure;
 
 		$tReplace['#CODE#']=$sTable;
 		if($bWithPagination==1){
@@ -313,7 +328,7 @@ class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
 
 		/*SOURCE*/$oSourceMain->setPattern('#iciMethodJsonList#',$sMethodListJson);
 
-		
+
 
 		/*SOURCE*/$oSourceMain->setPattern('#iciMethodProcessDelete#',$sMethodProcessDelete);
 		/*SOURCE*/$oSourceMain->setPattern('#iciUpload#',$uploadsave);
@@ -321,48 +336,48 @@ class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
 		/*SOURCE*/$oSourceMain->setPattern('#icitColumn#',$stColumn);
 
 		/*SOURCE*/$oSourceMain->save();
-		
-		
+
+
 	}
 	private function genModelTpl($sModule,$sClass,$tColumn,$sTableName,$tCrud,$tLabel){
 		//$tColumn=_root::getParam('tColumn');
 		$tType=_root::getParam('tType');
-		
+
 		$tCrud[]='list';
-		
+
 		$tTpl=array('list');
-		
+
 		$tTplCrud=array(
 				'list' => 'list',
 		);
-		
+
 		foreach($tTpl as $sTpl){
 			//print $sTpl;
 			if(!in_array( $tTplCrud[$sTpl],$tCrud)){
 				//print "skip $sTpl ";
 				continue;
 			}
-			
+
 			/*SOURCE*/$oSourceView=$this->getObjectSource('example/view/'.$sTpl.'.php');
 			/*SOURCE*/$oSourceView->setPattern('#examplemodule#',$sModule);
-				
+
 
 				$sLinks='';
 				$sLinkNew='';
 
 				if($sTpl=='list'){
-					
+
 					$tReplace=array(
 						'#oExamplemodel#' => 'o'.ucfirst($sTableName),
 						'#examplemodule#' => $sModule
 					);
-					
+
 					//liens
 					$tLink['crudNew']=$oSourceView->getSnippet('linkNew',$tReplace);
 					$tLink['crudEdit']=$oSourceView->getSnippet('linkEdit',$tReplace);
 					$tLink['crudShow']=$oSourceView->getSnippet('linkShow',$tReplace);
 					$tLink['crudDelete']=$oSourceView->getSnippet('linkDelete',$tReplace);
-					
+
 					$iMaxCrud=count($tCrud);
 					$iMaxCrud-=2;
 					foreach($tCrud as $i => $sAction){
@@ -376,7 +391,7 @@ class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
 					if(in_array('crudNew',$tCrud)){
 						$sLinkNew=$tLink['crudNew'];
 					}
-					
+
 				}
 
 				$sTable='';
@@ -384,7 +399,7 @@ class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
 				$sEnctype='';
 				foreach($tColumn as $i => $sColumn){
 					$sLabel=$tLabel[$i];
-					
+
 					$sType=$tType[$i];
 					if($sType=='text' or $sType=='date'){
 						$sInput=$oSourceView->getSnippet('input',array(
@@ -431,29 +446,29 @@ class module_mods_normal_crudGuriddo extends abstract_moduleBuilder{
 
 					'#linknew#' => $sLinkNew,
 					'#links#' => $sLinks,
-				
+
 					'#oExamplemodel#' => 'o'.ucfirst($sTableName),
 					'#tExamplemodel#' => 't'.ucfirst($sTableName),
 					'#examplemodule#' => $sModule,
-					
-					
+
+
 					'#enctype#' => $sEnctype,
 					'#ici#' => $sTable,
 					'#icith#' => $sTableTh,
-					
+
 					'#colspan#' => (count($tColumn)+1)
 				);
-				
+
 				foreach($tReplace as $key => $val){
 					$oSourceView->setPattern($key,$val);
 				}
 				$oSourceView->save();
-				
+
 		}
-		
-		
-		
+
+
+
 	}
-	
-	
+
+
 }
