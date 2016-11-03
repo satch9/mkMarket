@@ -35,12 +35,6 @@
 		$this->oLayout->add('main',$oModuleGoogleMap->getMap());
 		##fin_code
 
-		Then in the layout used, add the GoogleMap API call
-
-		##debut_code
-		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-		##fin_code
-
 		note: think to get your googleMap key https://developers.google.com/maps/documentation/geocoding/get-api-key?hl=fr
 
 		##image googlemap.jpg
