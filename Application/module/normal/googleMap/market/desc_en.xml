@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<market>
+	<presentation><![CDATA[
+		This is an embedded module to display a GoogleMap map.
+		]]></presentation>
+
+	<actualites><![CDATA[
+
+
+		]]></actualites>
+
+	<utilisation><![CDATA[
+		In the main.php file of your application, in the action method you choose.
+
+		To do that, you should include this module in this example on placeholder "main"
+
+		##debut_code
+		$oModuleGoogleMap=new module_googleMap();
+		$oModuleGoogleMap->setKey('YOURGOOGLEMAPKEY');
+		$oModuleGoogleMap->setWidth(500);
+		$oModuleGoogleMap->setHeight(400);
+		$oModuleGoogleMap->setZoom(14);
+
+
+		//A simple point with a title on mouseover
+		$oModuleGoogleMap->addPosition('Place Charles de Gaulle, 75008 Paris','Arc de triomphe','lien');
+
+
+		//A point with some html content when we click on it
+		$oModuleGoogleMap->addPositionWithContent('5 Avenue Anatole France, 75007 Paris','Tour eiffel',array(
+		'<h1>Tour Eiffel</h1>',
+		'<p>5 Avenue Anatole France</p>'
+		));
+
+		$this->oLayout->add('main',$oModuleGoogleMap->getMap());
+		##fin_code
+
+		Then in the layout used, add the GoogleMap API call
+
+		##debut_code
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		##fin_code
+
+		note: think to get your googleMap key https://developers.google.com/maps/documentation/geocoding/get-api-key?hl=fr
+
+		##image googlemap.jpg
+
+
+
+
+		]]></utilisation>
+
+</market>

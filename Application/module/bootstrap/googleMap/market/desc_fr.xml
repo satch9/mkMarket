@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<market>
+    <presentation><![CDATA[
+	Ce module est un module intégrable permettant d'intégrer une carte Google Map dans votre application.
+    ]]></presentation>
+
+    <actualites><![CDATA[
+
+
+    ]]></actualites>
+
+    <utilisation><![CDATA[
+Dans votre fichier main.php de votre application, au sein de l'action de votre choix
+
+Pour cela vous devez inclure ce module comme suit, ici à l'emplacement principal "main"
+
+##debut_code
+$oModuleGoogleMap=new module_googleMap();
+$oModuleGoogleMap->setKey('VOTRECLEGOOGLEMAP');
+$oModuleGoogleMap->setWidth(500);
+$oModuleGoogleMap->setHeight(400);
+$oModuleGoogleMap->setZoom(14);
+
+
+//Un simple pointer avec un titre au survol
+$oModuleGoogleMap->addPosition('Place Charles de Gaulle, 75008 Paris','Arc de trimphe','lien');
+
+
+//un pointer avec un peu de contenu html lorsque l'on clique dessus
+$oModuleGoogleMap->addPositionWithContent('5 Avenue Anatole France, 75007 Paris','Tour eiffel',array(
+'<h1>Tour Eiffel</h1>',
+'<p>5 Avenue Anatole France</p>'
+));
+
+$this->oLayout->add('main',$oModuleGoogleMap->getMap());
+##fin_code
+
+Et dans le layout utilisé, ajoutez l'appel à l'API de google map
+
+##debut_code
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+##fin_code
+
+note: pensez à récuperer votre clé googleMap https://developers.google.com/maps/documentation/geocoding/get-api-key?hl=fr
+
+##image googlemap.jpg
+
+
+
+    ]]></utilisation>
+
+</market>
